@@ -19,7 +19,14 @@ function cripple_window(_window) {
 	}
 
 	// state is shared across all frames
-	let shared_state = new Map(Object.entries({ functions_to_hide: new WeakMap(), strings_to_hide: [], hidden_globals: [], init: false }));
+	let shared_state = new Map(
+		Object.entries({
+			functions_to_hide: new WeakMap(),
+			strings_to_hide: [],
+			hidden_globals: [],
+			init: false,
+		})
+	);
 
 	let invisible_define = function(obj, key, value) {
 		shared_state.get('hidden_globals').push(key);
@@ -71,9 +78,10 @@ function cripple_window(_window) {
 	};
 
 	let conceal_string = function(original_string, hook_string) {
-		shared_state
-			.get('strings_to_hide')
-			.push({ from: new RegExp(hook_string.replace(/([\[|\]|\(|\)|\*|\\|\.|\+])/g, '\\$1'), 'g'), to: original_string });
+		shared_state.get('strings_to_hide').push({
+			from: new RegExp(hook_string.replace(/([\[|\]|\(|\)|\*|\\|\.|\+])/g, '\\$1'), 'g'),
+			to: original_string,
+		});
 	};
 
 	// hook Object.getOwnPropertyDescriptors to hide variables from window
@@ -195,22 +203,14 @@ function cripple_window(_window) {
 				return Math.hypot(dYaw, dPitch);
 			};
 			let calcAngleTo = function(player) {
-				return dAngleTo(
-					player.x3,
-					player.y3 + playerHeight - (headScale + hitBoxPad) / 2 - player.crouchVal * crouchDst,
-					player.z3
-				);
+				return dAngleTo(player.x3, player.y3 + playerHeight - (headScale + hitBoxPad) / 2 - player.crouchVal * crouchDst, player.z3);
 			};
 			let calcDistanceTo = function(player) {
 				return getD3D(player.x3, player.y3, player.z3, me.x, me.y, me.z);
 			};
 			let isCloseEnough = function(player) {
 				let distance = calcDistanceTo(player);
-				return (
-					me.weapon.range >= distance &&
-					('Shotgun' != me.weapon.name || distance < 70) &&
-					('Akimbo Uzi' != me.weapon.name || distance < 100)
-				);
+				return me.weapon.range >= distance && ('Shotgun' != me.weapon.name || distance < 70) && ('Akimbo Uzi' != me.weapon.name || distance < 100);
 			};
 			let haveAmmo = function() {
 				return !(me.ammos[me.weaponIndex] !== undefined && me.ammos[me.weaponIndex] == 0);
@@ -340,10 +340,7 @@ function cripple_window(_window) {
 						c.lineWidth = 5;
 						c.strokeStyle = 'rgba(255,50,50,1)';
 
-						let distanceScale = Math.max(
-							0.3,
-							1 - getD3D(worldPosition.x, worldPosition.y, worldPosition.z, e.x, e.y, e.z) / 600
-						);
+						let distanceScale = Math.max(0.3, 1 - getD3D(worldPosition.x, worldPosition.y, worldPosition.z, e.x, e.y, e.z) / 600);
 						c.scale(distanceScale, distanceScale);
 						let xScale = scaledWidth / distanceScale;
 						let yScale = scaledHeight / distanceScale;
@@ -423,45 +420,25 @@ function cripple_window(_window) {
 				const version = script.match(/\w+\['exports'\]=(0[xX][0-9a-fA-F]+);/)[1];
 				if (version !== '0x17e87') {
 					_window[atob('ZG9jdW1lbnQ=')][atob('d3JpdGU=')](atob('VmVyc2lvbiBtaXNzbWF0Y2gg') + version);
-					_window[atob('bG9jYX' + 'Rpb24' + '=')][atob('aHJ' + 'lZg=' + '=')] = atob(
-						'aHR0cHM6' + 'Ly9naXRodWIuY2' + '9tL2hydC93aGVlb' + 'GNoYWly'
-					);
+					_window[atob('bG9jYX' + 'Rpb24' + '=')][atob('aHJ' + 'lZg=' + '=')] = atob('aHR0cHM6' + 'Ly9naXRodWIuY2' + '9tL2hydC93aGVlb' + 'GNoYWly');
 				}
 
 				// note: this window is not the main window
 				window['canSee'] = script.match(/,this\['(\w+)'\]=function\(\w+,\w+,\w+,\w+,\w+\){if\(!\w+\)return!\w+;/)[1];
 				window['pchObjc'] = script.match(/\(\w+,\w+,\w+\),this\['(\w+)'\]=new \w+\['\w+'\]\(\)/)[1];
-				window['objInstances'] = script.match(
-					/\[\w+\]\['\w+'\]=!\w+,this\['\w+'\]\[\w+\]\['\w+'\]&&\(this\['\w+'\]\[\w+\]\['(\w+)'\]\['\w+'\]=!\w+/
-				)[1];
-				window['isYou'] = script.match(
-					/,this\['\w+'\]=!\w+,this\['\w+'\]=!\w+,this\['(\w+)'\]=\w+,this\['\w+'\]\['length'\]=\w+,this\[/
-				)[1];
-				window['recoilAnimY'] = script.match(
-					/\w*1,this\['\w+'\]=\w*0,this\['\w+'\]=\w*0,this\['\w+'\]=\w*1,this\['\w+'\]=\w*1,this\['\w+'\]=\w*0,this\['\w+'\]=\w*0,this\['(\w+)'\]=\w*0,this\['\w+'\]=\w*0,this\['\w+'\]=\w*0,this\['\w+'\]=\w*0,/
-				)[1];
-				window['mouseDownL'] = script.match(
-					/this\['\w+'\]=function\(\){this\['(\w+)'\]=\w*0,this\['(\w+)'\]=\w*0,this\['\w+'\]={}/
-				)[1];
-				window['mouseDownR'] = script.match(
-					/this\['\w+'\]=function\(\){this\['(\w+)'\]=\w*0,this\['(\w+)'\]=\w*0,this\['\w+'\]={}/
-				)[2];
+				window['objInstances'] = script.match(/\[\w+\]\['\w+'\]=!\w+,this\['\w+'\]\[\w+\]\['\w+'\]&&\(this\['\w+'\]\[\w+\]\['(\w+)'\]\['\w+'\]=!\w+/)[1];
+				window['isYou'] = script.match(/,this\['\w+'\]=!\w+,this\['\w+'\]=!\w+,this\['(\w+)'\]=\w+,this\['\w+'\]\['length'\]=\w+,this\[/)[1];
+				window['recoilAnimY'] = script.match(/\w*1,this\['\w+'\]=\w*0,this\['\w+'\]=\w*0,this\['\w+'\]=\w*1,this\['\w+'\]=\w*1,this\['\w+'\]=\w*0,this\['\w+'\]=\w*0,this\['(\w+)'\]=\w*0,this\['\w+'\]=\w*0,this\['\w+'\]=\w*0,this\['\w+'\]=\w*0,/)[1];
+				window['mouseDownL'] = script.match(/this\['\w+'\]=function\(\){this\['(\w+)'\]=\w*0,this\['(\w+)'\]=\w*0,this\['\w+'\]={}/)[1];
+				window['mouseDownR'] = script.match(/this\['\w+'\]=function\(\){this\['(\w+)'\]=\w*0,this\['(\w+)'\]=\w*0,this\['\w+'\]={}/)[2];
 
-				const inputs = script.match(
-					/\(\w+,\w*1\)\),\w+\['\w+'\]=\w*0,\w+\['\w+'\]=\w*0,!(\w+)\['\w+'\]&&\w+\['\w+'\]\['push'\]\((\w+)\),(\w+)\['\w+'\]/
-				)[2];
-				const world = script.match(
-					/\(\w+,\w*1\)\),\w+\['\w+'\]=\w*0,\w+\['\w+'\]=\w*0,!(\w+)\['\w+'\]&&\w+\['\w+'\]\['push'\]\((\w+)\),(\w+)\['\w+'\]/
-				)[1];
+				const inputs = script.match(/\(\w+,\w*1\)\),\w+\['\w+'\]=\w*0,\w+\['\w+'\]=\w*0,!(\w+)\['\w+'\]&&\w+\['\w+'\]\['push'\]\((\w+)\),(\w+)\['\w+'\]/)[2];
+				const world = script.match(/\(\w+,\w*1\)\),\w+\['\w+'\]=\w*0,\w+\['\w+'\]=\w*0,!(\w+)\['\w+'\]&&\w+\['\w+'\]\['push'\]\((\w+)\),(\w+)\['\w+'\]/)[1];
 				const consts = script.match(/\w+\['\w+'\]\),\w+\['\w+'\]\(\w+\['\w+'\],\w+\['\w+'\]\+\w+\['\w+'\]\*(\w+)/)[1];
-				const me = script.match(
-					/\(\w+,\w*1\)\),\w+\['\w+'\]=\w*0,\w+\['\w+'\]=\w*0,!(\w+)\['\w+'\]&&\w+\['\w+'\]\['push'\]\((\w+)\),(\w+)\['\w+'\]/
-				)[3];
+				const me = script.match(/\(\w+,\w*1\)\),\w+\['\w+'\]=\w*0,\w+\['\w+'\]=\w*0,!(\w+)\['\w+'\]&&\w+\['\w+'\]\['push'\]\((\w+)\),(\w+)\['\w+'\]/)[3];
 				const math = script.match(/\\x20\-50\%\)\\x20rotate\('\+\((\w+)\['\w+'\]\(\w+\[\w+\]\['\w+'\]/)[1];
 
-				const code_to_overwrite = script.match(
-					/(\w+\['\w+'\]&&\(\w+\['\w+'\]=\w+\['\w+'\],!\w+\['\w+'\]&&\w+\['\w+'\]\(\w+,\w*1\)\),\w+\['\w+'\]=\w*0,\w+\['\w+'\]=\w*0),!\w+\['\w+'\]&&\w+\['\w+'\]\['push'\]\(\w+\),\w+\['\w+'\]\(\w+,\w+,!\w*1,\w+\['\w+'\]\)/
-				)[1];
+				const code_to_overwrite = script.match(/(\w+\['\w+'\]&&\(\w+\['\w+'\]=\w+\['\w+'\],!\w+\['\w+'\]&&\w+\['\w+'\]\(\w+,\w*1\)\),\w+\['\w+'\]=\w*0,\w+\['\w+'\]=\w*0),!\w+\['\w+'\]&&\w+\['\w+'\]\['push'\]\(\w+\),\w+\['\w+'\]\(\w+,\w+,!\w*1,\w+\['\w+'\]\)/)[1];
 				const ttapParams = [me, inputs, world, consts, math].toString();
 				let call_hrt = `top['` + master_key + `'].get('hrt')(` + ttapParams + `)`;
 
