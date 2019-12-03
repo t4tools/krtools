@@ -105,8 +105,6 @@ function cripple_window(_window) {
 
 	// drawVisuals gets overwritten later - place hook before anti cheat loads
 	let drawVisuals = function() {};
-
-	let isInView = function() {};
 	const original_clearRect = _window.CanvasRenderingContext2D.prototype.clearRect;
 	let hook_clearRect = new Proxy(original_clearRect, {
 		apply: function(target, _this, _arguments) {
@@ -232,7 +230,7 @@ function cripple_window(_window) {
 				e.x3 = e.x;
 				e.y3 = e.y;
 				e.z3 = e.z;
-				if ((!isCloseEnough(e) || !canHit(e)) && !isInView(e)) {
+				if (!isCloseEnough(e) || !canHit(e)) {
 					continue;
 				}
 
@@ -287,7 +285,6 @@ function cripple_window(_window) {
 				drawVisuals = function(c) {
 					let scalingFactor = arguments.callee.caller.caller.arguments[0];
 					let perspective = arguments.callee.caller.caller.arguments[2];
-					isInView = perspective.frustum.containsPoint;
 					let scaledWidth = c.canvas.width / scalingFactor;
 					let scaledHeight = c.canvas.height / scalingFactor;
 					let worldPosition = perspective.camera.getWorldPosition();
