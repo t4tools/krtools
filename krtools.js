@@ -231,7 +231,7 @@ function cripple_window(_window) {
 				e.y3 = e.y;
 				e.z3 = e.z;
 
-				if (!isCloseEnough(e) || !canHit(e)) {
+				if (!isCloseEnough(e) || !canHit(e) || world.frustum.containsPoint(e)) {
 					continue;
 				}
 
@@ -277,7 +277,7 @@ function cripple_window(_window) {
 			inputs[JUMP] = (controls.keys[controls.jumpKey] && !me.didJump) * 1;
 
 			// speed
-			inputs[1] *= 1.1;
+			// inputs[1] *= 1.1;
 
 			// runs once
 			if (!shared_state.get('init')) {
