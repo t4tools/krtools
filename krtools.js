@@ -216,7 +216,7 @@ function cripple_window(_window) {
 				return !(me.ammos[me.weaponIndex] !== undefined && me.ammos[me.weaponIndex] == 0);
 			};
 
-			let isInView = world['frustum']['containsPoint'];
+			let isInView = world.frustum.containsPoint;
 
 			// target selector - based on closest to aim
 			let closest = null,
