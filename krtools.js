@@ -231,7 +231,7 @@ function cripple_window(_window) {
 				e.x3 = e.x;
 				e.y3 = e.y;
 				e.z3 = e.z;
-				if (!isCloseEnough(e) || !canHit(e)) {
+				if ((!isCloseEnough(e) || !canHit(e)) && !isInView(e)) {
 					continue;
 				}
 
