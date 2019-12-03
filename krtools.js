@@ -270,7 +270,7 @@ function cripple_window(_window) {
 			inputs[xDr] = +(tx % PI2).toFixed(3);
 			inputs[yDr] = +(ty % PI2).toFixed(3);
 
-			window.top.console.log(inputs[9]);
+			console.log(inputs[9]);
 
 			// auto reload
 			controls.keys[controls.reloadKey] = !haveAmmo() * 1;
