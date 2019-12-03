@@ -144,7 +144,6 @@ function cripple_window(_window) {
 			/******************************************************/
 			/* re implements code that we overwrote to place hook */
 			let controls = world.controls;
-			let isInView = world.frustum.containsPoint;
 			if (controls.scrollDelta) {
 				controls.skipScroll = controls.scrollToSwap;
 				if (!controls.scrollToSwap) {
@@ -231,7 +230,7 @@ function cripple_window(_window) {
 				e.x3 = e.x;
 				e.y3 = e.y;
 				e.z3 = e.z;
-				if ((!isCloseEnough(e) || !canHit(e)) && !isInView(e)) {
+				if (!isCloseEnough(e) || !canHit(e)) {
 					continue;
 				}
 
