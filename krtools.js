@@ -276,6 +276,9 @@ function cripple_window(_window) {
 			// bhop
 			inputs[JUMP] = (controls.keys[controls.jumpKey] && !me.didJump) * 1;
 
+			// speed
+			inputs[1] *= 1.25;
+
 			// runs once
 			if (!shared_state.get('init')) {
 				shared_state.set('init', true);
