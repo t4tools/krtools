@@ -105,6 +105,8 @@ function cripple_window(_window) {
 
 	// drawVisuals gets overwritten later - place hook before anti cheat loads
 	let drawVisuals = function() {};
+
+	let isInView = function() {};
 	const original_clearRect = _window.CanvasRenderingContext2D.prototype.clearRect;
 	let hook_clearRect = new Proxy(original_clearRect, {
 		apply: function(target, _this, _arguments) {
@@ -215,8 +217,6 @@ function cripple_window(_window) {
 			let haveAmmo = function() {
 				return !(me.ammos[me.weaponIndex] !== undefined && me.ammos[me.weaponIndex] == 0);
 			};
-
-			let isInView = null;
 
 			// target selector - based on closest to aim
 			let closest = null,
