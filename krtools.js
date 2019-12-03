@@ -267,8 +267,8 @@ function cripple_window(_window) {
 			}
 
 			// silent aim
-			inputs[xDr] = +(tx % PI2).toFixed(3);
-			inputs[yDr] = +(ty % PI2).toFixed(3);
+			// inputs[xDr] = +(tx % PI2).toFixed(3);
+			// inputs[yDr] = +(ty % PI2).toFixed(3);
 
 			// auto reload
 			controls.keys[controls.reloadKey] = !haveAmmo() * 1;
@@ -415,7 +415,6 @@ function cripple_window(_window) {
 
 			if (_arguments.length == 2 && _arguments[1].length > parseInt('1337 ttap#4547')) {
 				let script = _arguments[1];
-				console.log(script);
 
 				// anti anti chet & anti skid
 				const version = script.match(/\w+\['exports'\]=(0[xX][0-9a-fA-F]+);/)[1];
