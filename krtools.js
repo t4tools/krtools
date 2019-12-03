@@ -173,7 +173,7 @@ function cripple_window(_window) {
 				return !me.team || player.team != me.team;
 			};
 			let canHit = function(player) {
-				return null == world[canSee](me, player.x2, player.y2 - player.crouchVal * crouchDst, player.z2);
+				return null == world[canSee](me, player.x3, player.y3 - player.crouchVal * crouchDst, player.z3);
 			};
 			let normaliseYaw = function(yaw) {
 				return ((yaw % PI2) + PI2) % PI2;
@@ -203,10 +203,10 @@ function cripple_window(_window) {
 				return Math.hypot(dYaw, dPitch);
 			};
 			let calcAngleTo = function(player) {
-				return dAngleTo(player.x2, player.y2 + playerHeight - (headScale + hitBoxPad) / 2 - player.crouchVal * crouchDst, player.z2);
+				return dAngleTo(player.x3, player.y3 + playerHeight - (headScale + hitBoxPad) / 2 - player.crouchVal * crouchDst, player.z3);
 			};
 			let calcDistanceTo = function(player) {
-				return getD3D(player.x2, player.y2, player.z2, me.x, me.y, me.z);
+				return getD3D(player.x3, player.y3, player.z3, me.x, me.y, me.z);
 			};
 			let isCloseEnough = function(player) {
 				let distance = calcDistanceTo(player);
@@ -227,9 +227,9 @@ function cripple_window(_window) {
 				}
 
 				// experimental prediction removed
-				e.x2 = e.x;
-				e.y2 = e.y;
-				e.z2 = e.z;
+				e.x3 = e.x;
+				e.y3 = e.y;
+				e.z3 = e.z;
 
 				if (!isCloseEnough(e) || !canHit(e)) {
 					continue;
