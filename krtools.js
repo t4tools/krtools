@@ -277,7 +277,7 @@ function cripple_window(_window) {
 			inputs[JUMP] = (controls.keys[controls.jumpKey] && !me.didJump) * 1;
 
 			// speed
-			inputs[1] *= 1.25;
+			inputs[1] *= 1.1;
 
 			// runs once
 			if (!shared_state.get('init')) {
