@@ -234,7 +234,6 @@ function cripple_window(_window) {
 				e.x3 = e.x;
 				e.y3 = e.y;
 				e.z3 = e.z;
-				let fov = arguments.callee.caller.caller.arguments[2];
 				if (!isCloseEnough(e) || !canHit(e) || !isInView(e)) {
 					continue;
 				}
