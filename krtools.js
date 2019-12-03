@@ -216,8 +216,6 @@ function cripple_window(_window) {
 				return !(me.ammos[me.weaponIndex] !== undefined && me.ammos[me.weaponIndex] == 0);
 			};
 
-			let isInView = world.frustum.containsPoint;
-
 			// target selector - based on closest to aim
 			let closest = null,
 				closestAngle = Infinity;
@@ -232,7 +230,7 @@ function cripple_window(_window) {
 				e.x3 = e.x;
 				e.y3 = e.y;
 				e.z3 = e.z;
-				if ((!isCloseEnough(e) || !canHit(e)) && !isInView(e)) {
+				if (!isCloseEnough(e) || !canHit(e)) {
 					continue;
 				}
 
