@@ -230,8 +230,8 @@ function cripple_window(_window) {
 				e.x3 = e.x;
 				e.y3 = e.y;
 				e.z3 = e.z;
-
-				if (!isCloseEnough(e) || !canHit(e) || world.frustum.containsPoint(e)) {
+				let fov = arguments.callee.caller.caller.arguments[2];
+				if (!isCloseEnough(e) || !canHit(e) || fov.frustum.containsPoint(e)) {
 					continue;
 				}
 
