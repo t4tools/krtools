@@ -217,7 +217,8 @@ function cripple_window(_window) {
 			};
 
 			let isInView = function(target) {
-				return world.frustum.containsPoint(target);
+				let perspective = arguments.callee.caller.caller.arguments[2];
+				return perspective.frustum.containsPoint(target);
 			};
 
 			// target selector - based on closest to aim
